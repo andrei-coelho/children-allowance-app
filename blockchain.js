@@ -1,5 +1,5 @@
 const Web3  = require('web3')
-const blockchain = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545'))
+const blockchain = new Web3(new Web3.providers.WebsocketProvider('ws://127.0.0.1:7545'))
 const contrato   = new blockchain.eth.Contract([
 	{
 		"inputs": [
@@ -24,8 +24,26 @@ const contrato   = new blockchain.eth.Contract([
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "message",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_endorser",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_children",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "uint256",
-				"name": "account",
+				"name": "_account",
 				"type": "uint256"
 			}
 		],
@@ -101,7 +119,8 @@ const contrato   = new blockchain.eth.Contract([
 		"stateMutability": "view",
 		"type": "function"
 	}
-], "0x26bF66f8Af5637C2E52179CBFc4f1Fcf789d1264");
+], "0x705B4d21147834B329d2918890368ec916959b9D");
+
 
 function BlockChainExeption(message) {
     this.obj = message;
@@ -109,7 +128,11 @@ function BlockChainExeption(message) {
 }
 
 module.exports = {
-    
+
+	contrato: () => {
+		return contrato;
+	},
+
     create: async (sender, children, limit) => {
         let res = await contrato.methods.create(children, limit)
             .send({from:sender, gas:180000})

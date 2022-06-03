@@ -6,10 +6,21 @@ const AccountSchema = new Schema({
         type:Number,
         required:true
     },
-    endorser_id: Number,
-    children_id: Number,
-    amount: Number,
-    limit: Number
+    endorser:{
+        type:Schema.ObjectId,
+        ref:'Endorser',
+        required:true
+    },
+    children: {
+        type:Schema.ObjectId,
+        ref:'Children',
+        required:true
+    },
+    limit: {
+        type:Number,
+        required:true
+    },
+    amount: Number
 },{timestamps: true, id: false})
 
 module.exports = mongoose.model('Account', AccountSchema)

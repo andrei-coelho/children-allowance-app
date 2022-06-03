@@ -6,7 +6,10 @@ const ChildrenSchema =  new Schema({
         type:Number,
         required:true
     },
-    wallet: String,
+    user: {
+        type:Schema.ObjectId,
+        ref:'User'
+    },
     limit: Number,
     next_withdraw_in: Number // timestamp
 },{timestamps: true, id: false})

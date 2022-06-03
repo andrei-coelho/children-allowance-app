@@ -6,7 +6,10 @@ const EndorserSchema = new Schema({
         type:Number,
         required:true
     },
-    wallet: String
+    user: {
+        type:Schema.ObjectId,
+        ref:'User'
+    }
 },{timestamps: true, id: false})
 
 module.exports = mongoose.model('Endorser', EndorserSchema)

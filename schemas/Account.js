@@ -2,25 +2,27 @@ const mongoose = require('mongoose')
 const Schema   = mongoose.Schema 
 
 const AccountSchema = new Schema({
-    id: {
+    blockchain_id: {
         type:Number,
         required:true
     },
     endorser:{
         type:Schema.ObjectId,
-        ref:'Endorser',
+        ref:'User',
         required:true
     },
     children: {
         type:Schema.ObjectId,
-        ref:'Children',
+        ref:'User',
         required:true
     },
     limit: {
         type:Number,
         required:true
     },
-    amount: Number
-},{timestamps: true, id: false})
+    limit_used: Number,
+    amount: Number,
+    next_withdraw_in: Number // timestamp
+},{timestamps: true})
 
 module.exports = mongoose.model('Account', AccountSchema)
